@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from "react";
 import FileListing from "../FileListing/FileListing";
-import Filter from "../Filter/Filter";
+import Sort from "../Sort/Sort";
 import fetchFiles, { FileInfoType } from "@app/services/fetch-files";
-import { FilterType } from "@app/utils/grid";
+import { FileSortingOptionsType } from "@app/utils/file-grid-constants";
 
 type StatusType = "loading" | "success" | "error";
 
@@ -16,11 +16,13 @@ export default function FileGrid({ initialFileListing }: Props) {
   const [status, setStatus] = useState<StatusType>("loading");
   const [files, setFiles] = useState<FileInfoType[]>([]);
 
-  const handleFilterChange = async (sortType: FilterType) => {
+  const handleSortChange = async (
+    fileSortingOptions: FileSortingOptionsType
+  ) => {
     try {
       setStatus("loading");
 
-      const files = await fetchFiles(sortType);
+      const files = await fetchFiles(fileSortingOptions);
 
       setFiles(files);
       setStatus("success");
@@ -56,7 +58,7 @@ export default function FileGrid({ initialFileListing }: Props) {
 
   return (
     <div>
-      <Filter handleFilterChange={handleFilterChange} />
+      <Sort handleSortChange={handleSortChange} />
 
       {content}
     </div>

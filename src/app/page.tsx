@@ -1,9 +1,9 @@
 import FileGrid from "@app/components/FileGrid/FileGrid";
 import fetchFiles from "@app/services/fetch-files";
-import { FilterType } from "@app/utils/grid";
+import { FileSortingOptionsType } from "@app/utils/file-grid-constants";
 
 export default async function Home() {
-  const files = await fetchFiles(FilterType.CREATED_AT_ASC);
+  const files = await fetchFiles(FileSortingOptionsType.CREATED_AT_ASC);
 
   return <FileGrid initialFileListing={files} />;
 }

@@ -5,7 +5,7 @@ import "server-only";
 import fs from "fs";
 import { parse } from "csv-parse";
 import { finished } from "stream/promises";
-import { FilterType } from "@app/utils/grid";
+import { FileSortingOptionsType } from "@app/utils/file-grid-constants";
 
 export type FileInfoType = {
   rowNumber: number;
@@ -118,7 +118,7 @@ async function loadCSVData(): Promise<string[][]> {
 
 //  TODO: add unit test
 export default async function fetchFiles(
-  filter: FilterType = FilterType.CREATED_AT_ASC
+  filter: FileSortingOptionsType = FileSortingOptionsType.CREATED_AT_ASC
 ): Promise<FileInfoType[]> {
   let rowNumber = 1;
 
@@ -129,17 +129,17 @@ export default async function fetchFiles(
   }));
 
   switch (filter) {
-    case FilterType.FILENAME_ASC:
+    case FileSortingOptionsType.FILENAME_ASC:
       records.sort(({ name: a }, { name: b }) =>
         orderByFilename(a.toUpperCase(), b.toUpperCase(), "ASC")
       );
       break;
-    case FilterType.FILENAME_DESC:
+    case FileSortingOptionsType.FILENAME_DESC:
       records.sort(({ name: a }, { name: b }) =>
         orderByFilename(a.toUpperCase(), b.toUpperCase(), "DESC")
       );
       break;
-    case FilterType.CREATED_AT_ASC:
+    case FileSortingOptionsType.CREATED_AT_ASC:
     default:
       records.sort(({ date: a }, { date: b }) => (a < b ? -1 : a > b ? 1 : 0));
       break;
