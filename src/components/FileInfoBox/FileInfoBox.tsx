@@ -1,4 +1,4 @@
-import { FileInfoType } from "@app/services/fetch-files";
+import { FileInfoType } from "@app/app/actions";
 
 type Props = FileInfoType;
 

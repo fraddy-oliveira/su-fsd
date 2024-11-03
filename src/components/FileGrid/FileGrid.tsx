@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import FileListing from "../FileListing/FileListing";
 import Sort from "../Sort/Sort";
-import fetchFiles, { FileInfoType } from "@app/services/fetch-files";
 import { FileSortingOptionsType } from "@app/utils/file-grid-constants";
+import { getFilesAction, FileInfoType } from "@app/app/actions";
 
 type StatusType = "loading" | "success" | "error";
 
@@ -22,7 +22,7 @@ export default function FileGrid({ initialFileListing }: Props) {
     try {
       setStatus("loading");
 
-      const files = await fetchFiles(fileSortingOptions);
+      const files = await getFilesAction(fileSortingOptions);
 
       setFiles(files);
       setStatus("success");

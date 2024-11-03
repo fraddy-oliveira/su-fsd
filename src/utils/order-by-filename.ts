@@ -1,18 +1,3 @@
-"use server";
-
-import "server-only";
-
-import fs from "fs";
-import { parse } from "csv-parse";
-import { finished } from "stream/promises";
-import { FileSortingOptionsType } from "@app/utils/file-grid-constants";
-
-export type FileInfoType = {
-  rowNumber: number;
-  name: string;
-  date: string;
-};
-
 type SortType = "ASC" | "DESC";
 
 const orderByFilename = (a: string, b: string, sortType: SortType = "ASC") => {
@@ -95,55 +80,4 @@ const orderByFilename = (a: string, b: string, sortType: SortType = "ASC") => {
   return value === 0 ? 0 : sortType === "ASC" ? value : value < 0 ? 1 : -1;
 };
 
-async function loadCSVData(): Promise<string[][]> {
-  const records: string[][] = [];
-
-  const parser = fs
-    .createReadStream(process.cwd() + "/src/data/data.csv")
-    .pipe(parse({ delimiter: ";" }));
-
-  parser.on("readable", function () {
-    let record: string[];
-
-    while ((record = parser.read()) !== null) {
-      records.push([...record]);
-    }
-  });
-
-  //  TODO: gracefully release parser
-  await finished(parser);
-
-  return records;
-}
-
-//  TODO: add unit test
-export default async function fetchFiles(
-  filter: FileSortingOptionsType = FileSortingOptionsType.CREATED_AT_ASC
-): Promise<FileInfoType[]> {
-  let rowNumber = 1;
-
-  const records: FileInfoType[] = (await loadCSVData()).map((record) => ({
-    rowNumber: rowNumber++,
-    date: record[0],
-    name: record[1],
-  }));
-
-  switch (filter) {
-    case FileSortingOptionsType.FILENAME_ASC:
-      records.sort(({ name: a }, { name: b }) =>
-        orderByFilename(a.toUpperCase(), b.toUpperCase(), "ASC")
-      );
-      break;
-    case FileSortingOptionsType.FILENAME_DESC:
-      records.sort(({ name: a }, { name: b }) =>
-        orderByFilename(a.toUpperCase(), b.toUpperCase(), "DESC")
-      );
-      break;
-    case FileSortingOptionsType.CREATED_AT_ASC:
-    default:
-      records.sort(({ date: a }, { date: b }) => (a < b ? -1 : a > b ? 1 : 0));
-      break;
-  }
-
-  return records;
-}
+export default orderByFilename;
