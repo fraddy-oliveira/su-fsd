@@ -3,6 +3,7 @@
 import { FileSortingOptionsType } from "@app/utils/file-grid-constants";
 import { loadCSVData } from "@app/utils/load-csv-data";
 import orderByFilename from "@app/utils/order-by-filename";
+import { join } from "path";
 
 export type FileInfoType = {
   rowNumber: number;
@@ -16,7 +17,7 @@ export async function getFilesAction(
   let rowNumber = 1;
 
   const records: FileInfoType[] = (
-    await loadCSVData(process.cwd() + "/src/data/data.csv")
+    await loadCSVData(join(process.cwd(), 'data/data.csv'))
   ).map((record) => ({
     rowNumber: rowNumber++,
     date: record[0],
