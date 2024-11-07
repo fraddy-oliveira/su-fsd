@@ -1,5 +1,14 @@
 type SortType = "ASC" | "DESC";
 
+/**
+ * Compares input a and input b in ascending or descending order.
+ *
+ * @param a - The first input string
+ * @param b - The second input string
+ * @param sortType - sortType can be 'ASC' or 'DESC'
+ * @returns Returns -1, if 'a' should precede 'b'. Returns 1 if 'b' should precede 'a'. Returns 0 if both are equal.
+ *
+ */
 const orderByFilename = (a: string, b: string, sortType: SortType = "ASC") => {
   const pattern =
     // @ts-expect-error: Named capturing groups are only available when targeting 'ES2018' or later.
