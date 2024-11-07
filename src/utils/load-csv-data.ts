@@ -17,7 +17,6 @@ export async function loadCSVData(filepath: string): Promise<string[][]> {
     }
   });
 
-  //  TODO: gracefully release parser
   await finished(parser);
 
   return records;
