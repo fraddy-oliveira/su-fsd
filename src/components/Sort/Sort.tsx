@@ -8,9 +8,9 @@ type Props = {
 
 export default function Sort({ handleSortChange }: Props) {
   const sortOptions: Record<string, string> = {
-    [FileSortingOptionsType.CREATED_AT_ASC]: "created at",
-    [FileSortingOptionsType.FILENAME_ASC]: "filename ascending",
-    [FileSortingOptionsType.FILENAME_DESC]: "filename descending",
+    [FileSortingOptionsType.CREATED_AT_ASC]: "created at ascendent",
+    [FileSortingOptionsType.FILENAME_ASC]: "filename ascendent",
+    [FileSortingOptionsType.FILENAME_DESC]: "filename descendent",
   };
 
   return (
