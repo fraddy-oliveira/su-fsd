@@ -1,0 +1,38 @@
+name: Feature Branch Checks for lint, test, build.
+
+on:
+  push:
+    branches-ignore:
+      - main
+  pull_request:
+    branches: ['main']
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    strategy:
+      matrix:
+        node-version: [20.12.2]
+    uses: ./.github/workflows/lint.yml
+    with:
+      node-version: ${{ matrix.node-version }}
+
+  test:
+    strategy:
+      matrix:
+        node-version: [20.12.2]
+    needs: [lint]
+    uses: ./.github/workflows/test.yml
+    with:
+      node-version: ${{ matrix.node-version }}
+
+  build-check:
+    strategy:
+      matrix:
+        node-version: [20.12.2]
+    needs: [test]
+    uses: ./.github/workflows/build.yml
+    with:
+      node-version: ${{ matrix.node-version }}

@@ -1,0 +1,8 @@
+### Review Request Charter
+
+- [ ] I have tested ticket on local during run and buildtime and am confident that my changes fulfil the requirements of the ticket.
+- [ ] I have ensured no logs transmit any user sensitive data.
+- [ ] All acceptance criteria's outlined in the ticket are accomplished.
+- [ ] I have added meaningful description.
+
+### Description
